@@ -1,0 +1,23 @@
+
+
+
+.styleId{
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color: red;
+}
+.styleNombre{
+    font-family: Arial, Helvetica, sans-serif;
+    color: green;
+}
+.stylePrecio{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color:blue
+
+}
+.styleBoton{
+    color: blueviolet;
+}
+.styleEliminar{
+    color: blueviolet;
+
+}
