@@ -7,6 +7,7 @@ const productos = [
 ];
 
 const carrito = [];
+
 //agregar al carrito
 const agregar = (id) => {
     let producto = productos.find((item) => item.id === id);
@@ -26,6 +27,7 @@ const eliminar = (id) => {
     guardarEnStorage();
 };
 
+
 //ver productos
 productos.forEach(item => {
     let div = document.createElement("div");
@@ -37,7 +39,9 @@ productos.forEach(item => {
     <button class="styleEliminar" id="botonEliminar${item.id}">Eliminar</button>
     `;
     document.body.append(div);
+
     //botones
+
     let boton = document.getElementById(`boton${item.id}`);
     boton.addEventListener("click", () => agregar(item.id));
 
@@ -61,7 +65,8 @@ let vaciar = document.getElementById("vaciar");
 vaciar.addEventListener("click", () => {
     carrito.length = 0;
     guardarEnStorage();
-    alert("Carrito eliminado");
+    notificacion(`Su carrito fue eliminado`);
+    //alert("Carrito eliminado");
 });
 
 
@@ -75,24 +80,38 @@ const totalCompra = () => {
     return carrito.reduce((acumulador, producto) => acumulador + producto.precio, 0);
 };
 
-// Botón para mostrar el total de la compra en alert
+// alertas en forma de notificacion
+const notificacion = (message) => {
+    const messageElement = document.createElement("div");
+    messageElement.textContent = message;
+    messageElement.classList.add("notificacionEmergente");
+    document.body.appendChild(messageElement);
+
+    setTimeout(() => {
+        document.body.removeChild(messageElement);
+    }, 5000);
+};
+// Botón para mostrar el total de la compra en notificacion
 let verTotal = document.getElementById("verTotal");
 verTotal.addEventListener("click", () => {
-    //ingresar valor de la compra
-    let precioProducto = parseFloat(document.getElementById("calcularEnvio").value);
-
-    //valor total
-    let finalPrecio = envio(precioProducto);
 
     let totalCarrito = totalCompra();
 
     //alerta del total de la compra
-    alert(`El precio total de la compra es de: $${totalCarrito}`);
+    notificacion(`El precio total de la compra es de: $${totalCarrito}`);
+});
+// boton para calcular envio
+let calcularEnvioBtn = document.getElementById("calcularEnvioBtn");
+calcularEnvioBtn.addEventListener("click", () => {
 
-    // alerta precio final con envío
+    let precioProducto = parseFloat(document.getElementById("calcularEnvio").value);
+
+    let finalPrecio = envio(precioProducto);
+
+    // notificaciones de precio final o error
     if (!isNaN(finalPrecio)) {
-        alert(`Su valor adicional de envio es de: $${finalPrecio}`);
+        notificacion(`Su valor adicional de envío es de: $${finalPrecio}`);
     } else {
-        console.log("Error al calcular");
+        notificacion("Error al calcular");
     }
 });
